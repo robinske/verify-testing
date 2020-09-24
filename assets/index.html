@@ -132,7 +132,7 @@
               </p>
               <input
                 type="text"
-                id="update-to"
+                id="cancel-to"
                 class="form-control" 
                 required/>
             </div>
@@ -143,7 +143,7 @@
                 value="Cancel verification"/>
             </div>
           </form>
-          <span id="update-message"></span>
+          <span id="cancel-message"></span>
         </div>
       </div>
     </div>
@@ -249,6 +249,7 @@
 
       // Twilio functions do not accept multipart/form-data
       const data = new URLSearchParams();
+      data.append("status", "canceled");
       data.append("to", to);
 
       fetch("./update-verify", {
@@ -257,16 +258,19 @@
         })
         .then(response => response.json())
         .then(json => {
+          console.log(json);
           if (json.success) {
-            showStatus("update", "success", json.message);
+            showStatus("cancel", "success", `Canceled verification '${to}'`);
           } else {
-            showStatus("update", "danger", json.message);
+            console.log(json);
+            showStatus("cancel", "danger", `${json.message} <a href="${json.moreInfo}">[more info]</a>`);
           }
           $("#cancel-to").val("");
         })
         .catch(err => {
+          console.log("here....");
           console.log(err);
-          showStatus("update", "danger", "Something went wrong!");
+          showStatus("cancel", "danger", "Something went wrong!");
           $("#cancel-to").val("");
         });
     });

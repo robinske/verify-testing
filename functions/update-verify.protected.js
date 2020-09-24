@@ -43,33 +43,18 @@ exports.handler = function(context, event, callback) {
       return callback(null, response);
     }
 
-    if (!['approved', 'canceled'].includes(event.status)) {
-      response.setBody({
-        "success": false,
-        "error": {
-          "message": "Invalid parameter. Status can be one of 'canceled' or 'approved'",
-          "moreInfo": "https://www.twilio.com/docs/verify/api/verification"
-        }
-      })
-      response.setStatusCode(400);
-      return callback(null, response);
-    }
-
-  
     const client = context.getTwilioClient();
     const service = context.VERIFY_SERVICE_SID;
     const to = event.to;
-    const status = event.status;
   
     client
       .verify
       .services(service)
       .verifications(to) // can be SID or `to` (phone number/email)
       .update({
-        status: status
+        status: "canceled"
       })
       .then(verification => {
-        console.log(`Updated verification: '${verification.status}'`);
         response.setStatusCode(200);
         response.setBody({
           "success": true
@@ -77,6 +62,7 @@ exports.handler = function(context, event, callback) {
         callback(null, response);
       })
       .catch(error => {
+        console.log("OOOOOPS");
         console.log(error);
         response.setStatusCode(error.status);
         response.setBody({
