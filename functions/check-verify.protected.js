@@ -39,42 +39,57 @@ exports.handler = function(context, event, callback) {
     const service = context.VERIFY_SERVICE_SID;
     const to = event.to;
     const code = event.verification_code;
-  
-    client.verify.services(service)
-      .verificationChecks
-      .create({
-        to: to,
-        code: code
-      })
-      .then(check => {
-        if (check.status === "approved") {
-          response.setStatusCode(200);
-          response.setBody({
-            "success": true,
-            "message": "Verification success."
-          });
-          callback(null, response);
-        } else {
-          response.setStatusCode(401);
-          response.setBody({
-            "success": false,
-            "message": "Incorrect token."
-          });
-          callback(null, response);
-        }
-      })
-      .catch(error => {
-        console.log(error);
-        response.setStatusCode(error.status);
-        var details = "";
-        if (error.status == 404) {
-          details = "Note: Twilio deletes the verification SID once it is expired, approved, or when the max attempts to check a code have been reached. If you’d like to double check what happened with a given verification, please use the logs found in the Twilio Console under your Verification Service."
-        }
+
+    const checkToken = (check) => {
+      if (check.status === "approved") {
+        response.setStatusCode(200);
         response.setBody({
-          success: false,
-          message: `${error.message}.\n\n${details}`
+          "success": true,
+          "message": "Verification success."
         });
         callback(null, response);
+      } else {
+        response.setStatusCode(401);
+        response.setBody({
+          "success": false,
+          "message": "Incorrect token."
+        });
+        callback(null, response);
+      }
+    }
+
+    const handleError = (error) => {
+      console.log(error);
+      response.setStatusCode(error.status);
+      var details = "";
+      if (error.status == 404) {
+        details = "Note: Twilio deletes the verification SID once it is expired, approved, or when the max attempts to check a code have been reached. If you’d like to double check what happened with a given verification, please use the logs found in the Twilio Console under your Verification Service."
+      }
+      response.setBody({
+        success: false,
+        message: `${error.message}.\n\n${details}`
       });
+      callback(null, response);
+    }
+    
+    if (to.startsWith("VE")) {
+      client.verify.services(service)
+        .verificationChecks
+        .create({
+          verificationSid: to,
+          code: code
+        })
+        .then(check => checkToken(check))
+        .catch(error => handleError(error))
+    } else {
+      client.verify.services(service)
+        .verificationChecks
+        .create({
+          to: to,
+          code: code
+        })
+        .then(check => checkToken(check))
+        .catch(error => handleError(error))
+    }
   };
   

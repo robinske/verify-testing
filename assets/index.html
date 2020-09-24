@@ -175,6 +175,7 @@
       var content = $(`#${actionName}-message`);
       content.empty();
       content.append(`${message}`)
+        .removeClass()
         .addClass(`text-${statusType}`);
     }
 
