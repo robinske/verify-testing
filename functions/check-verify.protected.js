@@ -66,9 +66,13 @@ exports.handler = function(context, event, callback) {
       .catch(error => {
         console.log(error);
         response.setStatusCode(error.status);
+        var details = "";
+        if (error.status == 404) {
+          details = "Note: Twilio deletes the verification SID once it is expired, approved, or when the max attempts to check a code have been reached. If you’d like to double check what happened with a given verification, please use the logs found in the Twilio Console under your Verification Service."
+        }
         response.setBody({
           success: false,
-          message: error.message
+          message: `${error.message}.\n\n${details}`
         });
         callback(null, response);
       });

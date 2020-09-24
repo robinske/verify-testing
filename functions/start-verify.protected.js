@@ -12,7 +12,6 @@
  *  Returns JSON
  *  {
  *    "success": boolean,
- *    "sid": string             // null if success is false
  *    "error": {                // not present if success is true
  *      "message": string,
  *      "moreInfo": url string
@@ -62,17 +61,21 @@ exports.handler = function(context, event, callback) {
         callback(null, response);
       })
       .catch(error => {
-        // console.log(error);
-        console.log(error.message);
         response.setStatusCode(error.status);
         var details = error;
         details.success = false;
         details.message = error.prototype.message;
         error['success'] = false;
         error['message'] = error.prototype.message;
-        console.log(error);
-        console.log(details);
-        response.setBody(error);
+        console.log("Error: " + error);
+        console.log("Details: " + details);
+        response.setBody({
+          success: false,
+          error: {
+            message: error.message,
+            moreInfo: error.moreInfo
+          }
+        });
         callback(null, response);
       });
   };
