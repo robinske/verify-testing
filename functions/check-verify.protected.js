@@ -45,7 +45,7 @@ exports.handler = function(context, event, callback) {
         response.setStatusCode(200);
         response.setBody({
           "success": true,
-          "message": "Verification success."
+          "message": `Verification '${to}' approved.`
         });
         callback(null, response);
       } else {
@@ -79,8 +79,8 @@ exports.handler = function(context, event, callback) {
           verificationSid: to,
           code: code
         })
-        .then(check => checkToken(check))
-        .catch(error => handleError(error))
+        .then(checkToken)
+        .catch(handleError)
     } else {
       client.verify.services(service)
         .verificationChecks
