@@ -204,7 +204,7 @@
           if (json.success) {
             showStatus("start", "success", `Sent token to ${to} (SID: '${json.sid}')`);
           } else {
-            showStatus("start", "danger", `${json.message} <a href="${json.moreInfo}">[more info]</a>`);
+            showStatus("start", "danger", `${json.error.message} <a href="${json.error.moreInfo}">[more info]</a>`);
           }
         })
         .catch(err => {
@@ -263,7 +263,7 @@
             showStatus("cancel", "success", `Canceled verification '${to}'`);
           } else {
             console.log(json);
-            showStatus("cancel", "danger", `${json.message} <a href="${json.moreInfo}">[more info]</a>`);
+            showStatus("cancel", "danger", `${json.error.message} <a href="${json.error.moreInfo}">[more info]</a>`);
           }
           $("#cancel-to").val("");
         })

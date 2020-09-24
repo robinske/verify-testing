@@ -66,10 +66,10 @@ exports.handler = function(context, event, callback) {
         console.log(error);
         response.setStatusCode(error.status);
         response.setBody({
-          "success": false,
-          "error": {
-            "message": error.message,
-            "moreInfo": error.moreInfo
+          success: false,
+          error: {
+            message: error.message,
+            moreInfo: error.moreInfo
           }
         });
         callback(null, response);
