@@ -13,15 +13,6 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.11/css/intlTelInput.css"
     />
-    <style>
-      .row {
-        border: 1px solid; 
-        border-color: #ccc; 
-        border-radius: 8px; 
-        padding: 0 0 12px 0; 
-        margin: 12px 0 12px 0;
-      }
-    </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.11/js/intlTelInput.min.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -37,93 +28,103 @@
       </p>
       <div class="content">
         <div class="row">
-          <div class="col-lg-12">
-            <h3>Start a verification</h3>
-            <form id="start">
-              <div class="form-group" id="channel-select">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="channel" id="channel-sms" value="sms" checked>
-                  <label class="form-check-label" for="channel-sms">SMS</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="channel" id="channel-call" value="call">
-                  <label class="form-check-label" for="channel-call">Call</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="channel" id="channel-email" value="email">
-                  <label class="form-check-label" for="channel-email">Email</label>
-                </div>
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Start a verification</h3>
               </div>
-              <div class="form-group phone-input">
-                <p>Enter your phone number:</p>
-                <input
-                  type="tel"
-                  id="phone_number"
-                  class="form-control" />
+              <div class="panel-body">
+                <form id="start">
+                  <div class="form-group" id="channel-select">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="channel" id="channel-sms" value="sms" checked>
+                      <label class="form-check-label" for="channel-sms">SMS</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="channel" id="channel-call" value="call">
+                      <label class="form-check-label" for="channel-call">Call</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="channel" id="channel-email" value="email">
+                      <label class="form-check-label" for="channel-email">Email</label>
+                    </div>
+                  </div>
+                  <div class="form-group phone-input">
+                    <p>Enter your phone number:</p>
+                    <input
+                      type="tel"
+                      id="phone_number"
+                      class="form-control" />
+                  </div>
+                  <div class="form-group email-input" style="display:none;">
+                    <p>Enter your email:</p>
+                    <input
+                      type="email"
+                      id="email"
+                      class="form-control" />
+                  </div>
+                  <div class="form-group locale-input">
+                    <p>Select your preferred language:</p>
+                    <select class="form-control" id="select-locale">
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <input
+                      type="submit"
+                      class="btn btn-primary"
+                      value="Start verification"/>
+                  </div>
+                </form>
+                <div id="start-message"></div>
               </div>
-              <div class="form-group email-input" style="display:none;">
-                <p>Enter your email:</p>
-                <input
-                  type="email"
-                  id="email"
-                  class="form-control" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Check a verification</h3>
               </div>
-              <div class="form-group locale-input">
-                <p>Select your preferred language:</p>
-                <select class="form-control" id="select-locale">
-                </select>
+              <div class="panel-body">
+                <form id="check">
+                  <div class="form-group">
+                    <p>
+                      Enter the verification SID, phone number (<a href="https://www.twilio.com/docs/glossary/what-e164">in e.164 format</a>), 
+                      or email you want to verify:
+                    </p>
+                    <input
+                      type="text"
+                      id="check-to"
+                      class="form-control" 
+                      required/>
+                  </div>
+                  <div class="form-group">
+                    <p>
+                      Enter the one-time passcode:
+                    </p>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="verification_code"
+                      required/>
+                  </div>
+                  <div class="form-group">
+                    <input
+                      type="submit"
+                      class="btn btn-primary"
+                      value="Check verification"/>
+                  </div>
+                </form>
+                <div id="check-message" style="white-space: pre-wrap;"></div>
               </div>
-              <div class="form-group">
-                <input
-                  type="submit"
-                  class="btn btn-primary"
-                  value="Start verification"/>
-              </div>
-            </form>
-            <div id="start-message"></div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <h3>Check a verification</h3>
-          <div>
-            <form id="check">
-              <div class="form-group">
-                <p>
-                  Enter the verification SID, phone number (<a href="https://www.twilio.com/docs/glossary/what-e164">in e.164 format</a>), 
-                  or email you want to verify:
-                </p>
-                <input
-                  type="text"
-                  id="check-to"
-                  class="form-control" 
-                  required/>
-              </div>
-              <div class="form-group">
-                <p>
-                  Enter the one-time passcode:
-                </p>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="verification_code"
-                  required/>
-              </div>
-              <div class="form-group">
-                <input
-                  type="submit"
-                  class="btn btn-primary"
-                  value="Check verification"/>
-              </div>
-            </form>
-            <div id="check-message" style="white-space: pre-wrap;"></div>
-          </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Cancel a verification</h3>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <h3>Cancel a verification</h3>
+        <div class="panel-body">
           <form id="cancel">
             <div class="form-group">
               <p>
