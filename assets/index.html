@@ -217,7 +217,7 @@
           showStatus(
             "service-details",
             "danger",
-            `Unable to load Service <a href="https://www.twilio.com/console/verify/services/${json.sid}/settings"><strong>${json.error.sid}</strong></a>, check the Service SID in your .env file.`)
+            `Unable to load Service <a href="https://www.twilio.com/console/verify/services/${json.error.sid}/settings"><strong>${json.error.sid}</strong></a>, check the Service SID in your .env file.`)
         }
       })
       .catch(err => {
