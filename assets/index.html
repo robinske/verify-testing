@@ -24,8 +24,9 @@
     <div class="container">
       <h2>Twilio Verify</h2>
       <p>
-        This application can be used during development to test your verification workflow.
+        This application can be used during development to test and troubleshoot your verification workflow.
       </p>
+      <div id="service-details-message"></div>
       <div class="content">
         <div class="row">
           <div class="col-md-7">
@@ -199,6 +200,31 @@
         $(".email-input").hide();
       }
     });
+
+    fetch("./service-details")
+      .then(response => response.json())
+      .then(json => {
+        if (json.success) {
+          console.log("success service details");
+          console.log(json);
+          $("#service-details-message").html(`
+            <p>
+              You're testing the <strong>${json.friendlyName}</strong> Service
+              with SID <a href="https://www.twilio.com/console/verify/services/${json.sid}/settings"><strong>${json.sid}</strong></a>.
+            </p>`
+          )
+        } else {
+          showStatus(
+            "service-details",
+            "danger",
+            `Unable to load Service <strong>${json.error.sid}</strong>, check the Service SID in your .env file.`)
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        showStatus("check", "danger", "Something went wrong!");
+        $("#verification_code").val("");
+      });
 
     function showStatus(actionName, statusType, message) {
       var content = $(`#${actionName}-message`);
