@@ -47,9 +47,7 @@ exports.handler = function(context, event, callback) {
     const service = context.VERIFY_SERVICE_SID;
     const to = event.to;
   
-    client
-      .verify
-      .services(service)
+    client.verify.services(service)
       .verifications(to) // can be SID or `to` (phone number/email)
       .update({
         status: 'canceled'
