@@ -69,13 +69,13 @@ exports.handler = function(context, event, callback) {
       })
       .catch((error) => {
         response.setStatusCode(error.status);
-        var details = '';
+        var message = error.message;
         if (error.status == 404) {
-          details = 'Note: Twilio deletes the verification SID once it is expired, approved, or when the max attempts to check a code have been reached. If you’d like to double check what happened with a given verification, please use the logs found in the Twilio Console under your Verification Service.'
+          message = `No pending verifications found for <strong>${to}</strong> to check.\n\nNote: Twilio deletes the verification SID once:<ul><li>it expires</li><li>it's approved</li><li>the max attempts to check a code have been reached</li></ul>\nTo check what happened with a specific verification, please use the <a href="https://www.twilio.com/console/verify/services/${service}/logs">logs in the Twilio Console</a>.`
         }
         response.setBody({
           success: false,
-          message: `${error.message}.\n\n${details}`
+          message: message
         });
         callback(null, response);
       });

@@ -25,9 +25,7 @@ exports.handler = function(context, event, callback) {
     const client = context.getTwilioClient();
     const service = context.VERIFY_SERVICE_SID;
   
-    client
-      .verify
-      .services(service)
+    client.verify.services(service)
       .fetch()
       .then(service => {
         response.setStatusCode(200);
