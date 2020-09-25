@@ -80,7 +80,13 @@
                   value="Start verification"/>
               </div>
             </form>
-            <span id="start-message"></span>
+            <div id="start-message">
+              
+            </div>
+            <!-- <div class="alert alert-warning" role="alert">
+              
+              <strong>Warning!</strong> Better check yourself, you're not looking too good.
+            </div> -->
           </div>
         </div>
       </div>
@@ -118,6 +124,10 @@
               </div>
             </form>
             <span id="check-message" style="white-space: pre-wrap;"></span>
+            <!-- <div class="alert alert-warning" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong>Warning!</strong> Better check yourself, you're not looking too good.
+            </div> -->
           </div>
         </div>
       </div>
@@ -144,6 +154,10 @@
             </div>
           </form>
           <span id="cancel-message"></span>
+          <!-- <div id="cancel-message" class="alert alert-warning" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Warning!</strong> Better check yourself, you're not looking too good.
+          </div> -->
         </div>
       </div>
     </div>
@@ -174,9 +188,11 @@
     function showStatus(actionName, statusType, message) {
       var content = $(`#${actionName}-message`);
       content.empty();
-      content.append(`${message}`)
-        .removeClass()
-        .addClass(`text-${statusType}`);
+      content
+        .addClass(`alert alert-${statusType}`)
+        .attr("role", "alert")
+        .html(message)
+        .append($("<button>").addClass("close").html(`&times;`))
     }
 
     $("#start").submit(function(event) {
@@ -213,6 +229,10 @@
           showStatus("start", "danger", "Error starting verification.");
         });
     });
+
+    $(".close").click(function(event) {
+      $(this).closest('div').remove();
+    })
 
     $("#check").submit(function(event) {
       event.preventDefault();

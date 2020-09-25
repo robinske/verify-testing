@@ -33,10 +33,10 @@ exports.handler = function(context, event, callback) {
   
     if (typeof event.to === 'undefined') {
       response.setBody({
-        'success': false,
-        'error': {
-          'message': 'Missing parameter; please provide a phone number, email, or Verification SID.',
-          'moreInfo': 'https://www.twilio.com/docs/verify/api/verification'
+        success: false,
+        error: {
+          message: 'Missing parameter; please provide a phone number, email, or Verification SID.',
+          moreInfo: 'https://www.twilio.com/docs/verify/api/verification'
         }
       })
       response.setStatusCode(400);
