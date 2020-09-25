@@ -15,6 +15,8 @@
 
 exports.handler = function(context, event, callback) {
     const response = new Twilio.Response();
+
+    // const client = require('twilio')(context.ACCOUNT_SID, context.AUTH_TOKEN);
     response.appendHeader('Content-Type', 'application/json');
     
     // uncomment to support CORS
@@ -23,7 +25,18 @@ exports.handler = function(context, event, callback) {
     // response.appendHeader('Access-Control-Allow-Headers', 'Content-Type');
 
     const client = context.getTwilioClient();
+
+    client.verify.services.list({limit: 10})
+      .then(services => console.log(services.sid))
+      .catch(e => console.log(e))
+
     const service = context.VERIFY_SERVICE_SID;
+
+    console.log("CLIENT???")
+    console.log(client)
+    console.log(context.ACCOUNT_SID)
+    console.log(context.AUTH_TOKEN)
+    console.log(context.getTwilioClient())
   
     client.verify.services(service)
       .fetch()

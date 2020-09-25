@@ -3,13 +3,27 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "twilio-run",
     "deploy": "twilio-run deploy"
   },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverage": true,
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ],
+    "testPathIgnorePatterns": [
+      "/_helpers/",
+      "/node_modules/"
+    ]
+  },
   "dependencies": {},
   "devDependencies": {
-    "twilio-run": "^2.6.0"
+    "jest-cli": "^24.8.0",
+    "twilio-run": "^2.6.0",
+    "twilio": "^3.49.3"
   },
   "engines": {
     "node": "10"
