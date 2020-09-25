@@ -8,8 +8,13 @@
  *  - Add VERIFY_SERVICE_SID from above to your Environment Variables (https://www.twilio.com/console/functions/configure)
  *  - Enable ACCOUNT_SID and AUTH_TOKEN in your functions configuration (https://www.twilio.com/console/functions/configure)
  *
+ *  Parameters:
+ *   to      | required                | email, e.164 formatted phone number, or verification SID
+ *   channel | optional, default 'sms' | one-time passcode sent to the user
+ *   locale  | optional, default 'en'  | for language localization
  *
- *  Returns JSON
+ *  Returns JSON of Verification response (https://www.twilio.com/docs/verify/api/verification#verification-response-properties)
+ *  and the following:
  *  {
  *    "success": boolean,
  *    "error": {                // not present if success is true
@@ -30,10 +35,10 @@ exports.handler = function(context, event, callback) {
   
     if (typeof event.to === 'undefined') {
       response.setBody({
-        "success": false,
-        "error": {
-          "message": "Missing parameter; please provide a phone number or email.",
-          "moreInfo": "https://www.twilio.com/docs/verify/api/verification"
+        success: false,
+        error: {
+          message: 'Missing parameter; please provide a phone number or email.',
+          moreInfo: 'https://www.twilio.com/docs/verify/api/verification'
         }
       })
       response.setStatusCode(400);
@@ -43,8 +48,8 @@ exports.handler = function(context, event, callback) {
     const client = context.getTwilioClient();
     const service = context.VERIFY_SERVICE_SID;
     const to = event.to;
-    const channel = (typeof event.channel === 'undefined') ? "sms" : event.channel;
-    const locale = (typeof event.locale === 'undefined') ? "en" : event.locale;
+    const channel = (typeof event.channel === 'undefined') ? 'sms' : event.channel;
+    const locale = (typeof event.locale === 'undefined') ? 'en' : event.locale;
   
     client.verify.services(service)
       .verifications

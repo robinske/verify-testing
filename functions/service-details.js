@@ -1,3 +1,18 @@
+/**
+ *  Service Details
+ *
+ *  This Function returns details about the verification service used in this project.
+ *  The Verify Service SID is pulled from environment variables.
+ *
+ *  Pre-requisites
+ *  - Create a Verify Service (https://www.twilio.com/console/verify/services)
+ *  - Add VERIFY_SERVICE_SID from above to your Environment Variables (https://www.twilio.com/console/functions/configure)
+ * 
+ *  Parameters:
+ *   NONE
+ *
+ */
+
 exports.handler = function(context, event, callback) {
     const response = new Twilio.Response();
     response.appendHeader('Content-Type', 'application/json');

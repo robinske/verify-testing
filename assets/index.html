@@ -205,8 +205,6 @@
       .then(response => response.json())
       .then(json => {
         if (json.success) {
-          console.log("success service details");
-          console.log(json);
           $("#service-details-message").html(`
             <p>
               You're testing the <strong>${json.friendlyName}</strong> Service
@@ -322,11 +320,9 @@
         })
         .then(response => response.json())
         .then(json => {
-          console.log(json);
           if (json.success) {
             showStatus("cancel", "success", `Canceled verification '${to}'`);
           } else {
-            console.log(json);
             showStatus("cancel", "danger", `${json.error.message} <a href="${json.error.moreInfo}">[more info]</a>`);
           }
           $("#cancel-to").val("");
@@ -352,7 +348,6 @@
         })
         .then(response => response.json())
         .then(json => {
-          console.log(json);
           if (json.success) {
             var content = $('#status-message');
             content.empty();
@@ -360,7 +355,6 @@
               .html(`<pre>${JSON.stringify(json, null, 2)}</pre>`)
               .show();
           } else {
-            console.log(json);
             showStatus("status", "danger", `${json.error.message} <a href="${json.error.moreInfo}">[more info]</a>`);
           }
           $("#status-to").val("");

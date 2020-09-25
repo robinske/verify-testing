@@ -1,15 +1,16 @@
 /**
- *  Update Verification
+ *  Verification Status
  *  https://www.twilio.com/docs/verify/api/verification
  *
- *  This Function shows you how to manually update a verification token for Twilio Verify.
+ *  This Function gets the status of a single verification
  * 
- *  This only intended for use for testing purposes and customers using the custom_code endpoint.
- *
  *  Pre-requisites
  *  - Create a Verify Service (https://www.twilio.com/console/verify/services)
  *  - Add VERIFY_SERVICE_SID from above to your Environment Variables (https://www.twilio.com/console/functions/configure)
- *  - Enable ACCOUNT_SID and AUTH_TOKEN in your functions configuration (https://www.twilio.com/console/functions/configure)
+ * 
+ *  
+ *  Parameters:
+ *   to      | required                | email, e.164 formatted phone number, or verification SID
  *
  *
  *  Returns JSON

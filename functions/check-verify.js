@@ -8,6 +8,9 @@
  *  - Add VERIFY_SERVICE_SID from above to your Environment Variables (https://www.twilio.com/console/functions/configure)
  *  - Enable ACCOUNT_SID and AUTH_TOKEN in your functions configuration (https://www.twilio.com/console/functions/configure)
  *
+ *  Parameters:
+ *   to                 | email, e.164 formatted phone number, or verification SID
+ *   verification_code  | one-time passcode sent to the user
  *
  *  Returns JSON:
  *  {
@@ -66,7 +69,6 @@ exports.handler = function(context, event, callback) {
         }
       })
       .catch((error) => {
-        console.log(error);
         response.setStatusCode(error.status);
         var details = '';
         if (error.status == 404) {
