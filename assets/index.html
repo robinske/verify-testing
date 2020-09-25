@@ -80,13 +80,7 @@
                   value="Start verification"/>
               </div>
             </form>
-            <div id="start-message">
-              
-            </div>
-            <!-- <div class="alert alert-warning" role="alert">
-              
-              <strong>Warning!</strong> Better check yourself, you're not looking too good.
-            </div> -->
+            <div id="start-message"></div>
           </div>
         </div>
       </div>
@@ -123,11 +117,7 @@
                   value="Check verification"/>
               </div>
             </form>
-            <span id="check-message" style="white-space: pre-wrap;"></span>
-            <!-- <div class="alert alert-warning" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <strong>Warning!</strong> Better check yourself, you're not looking too good.
-            </div> -->
+            <div id="check-message" style="white-space: pre-wrap;"></div>
           </div>
         </div>
       </div>
@@ -153,11 +143,7 @@
                 value="Cancel verification"/>
             </div>
           </form>
-          <span id="cancel-message"></span>
-          <!-- <div id="cancel-message" class="alert alert-warning" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Warning!</strong> Better check yourself, you're not looking too good.
-          </div> -->
+          <div id="cancel-message"></div>
         </div>
       </div>
     </div>
@@ -193,6 +179,11 @@
         .attr("role", "alert")
         .html(message)
         .append($("<button>").addClass("close").html(`&times;`))
+        .show();
+
+      $(".close").click(function() {
+        $(this).closest('div').hide();
+      })
     }
 
     $("#start").submit(function(event) {
@@ -229,10 +220,6 @@
           showStatus("start", "danger", "Error starting verification.");
         });
     });
-
-    $(".close").click(function(event) {
-      $(this).closest('div').remove();
-    })
 
     $("#check").submit(function(event) {
       event.preventDefault();
@@ -289,7 +276,6 @@
           $("#cancel-to").val("");
         })
         .catch(err => {
-          console.log("here....");
           console.log(err);
           showStatus("cancel", "danger", "Something went wrong!");
           $("#cancel-to").val("");

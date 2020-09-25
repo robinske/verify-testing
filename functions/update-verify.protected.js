@@ -55,6 +55,7 @@ exports.handler = function(context, event, callback) {
         status: 'canceled'
       })
       .then(verification => {
+        console.log("Canceled verification");
         response.setStatusCode(200);
         response.setBody({
           success: true
@@ -62,6 +63,8 @@ exports.handler = function(context, event, callback) {
         callback(null, response);
       })
       .catch(error => {
+        console.log("Error canceling verification");
+        console.log(error);
         response.setStatusCode(error.status);
         response.setBody({
           success: false,
