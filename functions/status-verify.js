@@ -10,10 +10,11 @@
  * 
  *  
  *  Parameters:
- *   to      | required                | email, e.164 formatted phone number, or verification SID
+ *   to | required | email, e.164 formatted phone number, or verification SID
  *
  *
- *  Returns JSON
+ *  Returns JSON of Verification response (https://www.twilio.com/docs/verify/api/verification#verification-response-properties)
+ *  and the following:
  *  {
  *    "success": boolean,
  *    "error": {                // not present if success is true

@@ -6,7 +6,6 @@
  *  Pre-requisites
  *  - Create a Verify Service (https://www.twilio.com/console/verify/services)
  *  - Add VERIFY_SERVICE_SID from above to your Environment Variables (https://www.twilio.com/console/functions/configure)
- *  - Enable ACCOUNT_SID and AUTH_TOKEN in your functions configuration (https://www.twilio.com/console/functions/configure)
  *
  *  Parameters:
  *   to      | required                | email, e.164 formatted phone number, or verification SID
@@ -48,8 +47,8 @@ exports.handler = function(context, event, callback) {
     const client = context.getTwilioClient();
     const service = context.VERIFY_SERVICE_SID;
     const to = event.to;
-    const channel = (typeof event.channel === 'undefined') ? 'sms' : event.channel;
-    const locale = (typeof event.locale === 'undefined') ? 'en' : event.locale;
+    const channel = (typeof event.channel === 'undefined') ? "sms" : event.channel;
+    const locale = (typeof event.locale === 'undefined') ? "en" : event.locale;
   
     client.verify.services(service)
       .verifications

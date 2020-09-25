@@ -1,5 +1,5 @@
 {
-  "name": "verify-testing",
+  "name": "verify-sample",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -22,8 +22,8 @@
   "dependencies": {},
   "devDependencies": {
     "jest-cli": "^24.8.0",
-    "twilio-run": "^2.6.0",
-    "twilio": "^3.49.3"
+    "twilio": "^3.49.3",
+    "twilio-run": "^2.6.0"
   },
   "engines": {
     "node": "10"

@@ -6,11 +6,10 @@
  *  Pre-requisites
  *  - Create a Verify Service (https://www.twilio.com/console/verify/services)
  *  - Add VERIFY_SERVICE_SID from above to your Environment Variables (https://www.twilio.com/console/functions/configure)
- *  - Enable ACCOUNT_SID and AUTH_TOKEN in your functions configuration (https://www.twilio.com/console/functions/configure)
  *
  *  Parameters:
- *   to                 | email, e.164 formatted phone number, or verification SID
- *   verification_code  | one-time passcode sent to the user
+ *   to                 | required | email, e.164 formatted phone number, or verification SID
+ *   verification_code  | required | one-time passcode sent to the user
  *
  *  Returns JSON:
  *  {
