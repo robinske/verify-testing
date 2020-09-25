@@ -47,18 +47,13 @@ exports.handler = function(context, event, callback) {
     const service = context.VERIFY_SERVICE_SID;
     const to = event.to;
   
-    client
-      .verify
-      .services(service)
-      .verifications(to) // can be SID or `to` (phone number/email)
-      .update({
-        status: 'canceled'
-      })
+    client.verify.services(service)
+      .verifications(to)
+      .fetch()
       .then(verification => {
         response.setStatusCode(200);
-        response.setBody({
-          success: true
-        });
+        verification.success = true;
+        response.setBody(verification);
         callback(null, response);
       })
       .catch(error => {

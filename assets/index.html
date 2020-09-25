@@ -28,7 +28,7 @@
       </p>
       <div class="content">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-7">
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h3 class="panel-title">Start a verification</h3>
@@ -79,7 +79,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-5">
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h3 class="panel-title">Check a verification</h3>
@@ -147,7 +147,35 @@
           <div id="cancel-message"></div>
         </div>
       </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Get a verification status</h3>
+        </div>
+        <div class="panel-body">
+          <form id="status">
+            <div class="form-group">
+              <p>
+                Enter the verification SID, phone number (<a href="https://www.twilio.com/docs/glossary/what-e164">in e.164 format</a>), 
+                or email:
+              </p>
+              <input
+                type="text"
+                id="status-to"
+                class="form-control" 
+                required/>
+            </div>
+            <div class="form-group">
+              <input
+                type="submit"
+                class="btn btn-primary"
+                value="Get verification status"/>
+            </div>
+          </form>
+          <div id="status-message"></div>
+        </div>
+      </div>
     </div>
+  </div>
   </body>
   <script>
     // Handle international prefixes, format phone input field
@@ -176,6 +204,7 @@
       var content = $(`#${actionName}-message`);
       content.empty();
       content
+        .removeClass()
         .addClass(`alert alert-${statusType}`)
         .attr("role", "alert")
         .html(message)
@@ -280,6 +309,40 @@
           console.log(err);
           showStatus("cancel", "danger", "Something went wrong!");
           $("#cancel-to").val("");
+        });
+    });
+
+    $("#status").submit(function(event) {
+      event.preventDefault();
+      const to = $("#status-to").val();
+
+      // Twilio functions do not accept multipart/form-data
+      const data = new URLSearchParams();
+      data.append("to", to);
+
+      fetch("./status-verify", {
+          method: 'POST',
+          body: data
+        })
+        .then(response => response.json())
+        .then(json => {
+          console.log(json);
+          if (json.success) {
+            var content = $('#status-message');
+            content.empty();
+            content
+              .html(`<pre>${JSON.stringify(json, null, 2)}</pre>`)
+              .show();
+          } else {
+            console.log(json);
+            showStatus("status", "danger", `${json.error.message} <a href="${json.error.moreInfo}">[more info]</a>`);
+          }
+          $("#status-to").val("");
+        })
+        .catch(err => {
+          console.log(err);
+          showStatus("status", "danger", "Something went wrong!");
+          $("#status-to").val("");
         });
     });
 
