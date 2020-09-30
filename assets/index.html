@@ -172,7 +172,7 @@
                 value="Get verification status"/>
             </div>
           </form>
-          <div id="status-message"></div>
+          <div id="status-message" style="position: relative;"></div>
         </div>
       </div>
     </div>
@@ -224,6 +224,12 @@
         $("#verification_code").val("");
       });
 
+    function registerCloseStatus() {
+      $(".close").click(function() {
+        $(this).closest('div').hide();
+      })
+    }
+
     function showStatus(actionName, statusType, message) {
       var content = $(`#${actionName}-message`);
       content.empty();
@@ -235,9 +241,7 @@
         .append($("<button>").addClass("close").html(`&times;`))
         .show();
 
-      $(".close").click(function() {
-        $(this).closest('div').hide();
-      })
+      registerCloseStatus();
     }
 
     $("#start").submit(function(event) {
@@ -352,8 +356,11 @@
             var content = $('#status-message');
             content.empty();
             content
-              .html(`<pre>${JSON.stringify(json, null, 2)}</pre>`)
+              .html(`<button class="close" style="position: absolute; top: 10px; right: 10px;">x</button>
+                     <pre>${JSON.stringify(json, null, 2)}</pre>`)
               .show();
+            
+            registerCloseStatus();
           } else {
             showStatus("status", "danger", `${json.error.message} <a href="${json.error.moreInfo}">[more info]</a>`);
           }
