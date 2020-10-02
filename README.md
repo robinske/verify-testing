@@ -1,7 +1,6 @@
 # verify-testing
 
 Pre reqs: 
-[Twilio CLI](https://www.twilio.com/docs/twilio-cli/quickstart)
 Create a [Verify Service](https://www.twilio.com/console/verify/services/)
 
 ```
@@ -15,7 +14,4 @@ Run locally:
 npm start
 ```
 
-Deploy:
-```
-twilio serverless:deploy
-```
+Note: to protect against fraud, **we recommend running this locally only**. Do not leave this as a live website. This interface is intended to be used during development to test and troubleshoot your verification workflow.
